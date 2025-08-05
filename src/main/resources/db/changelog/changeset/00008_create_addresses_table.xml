@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1754017221688-1" author="kareem">
+        <createTable tableName="addresses">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="state" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="postal_code" type="varchar(20)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="street" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="addresses"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_addresses_user_id"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"/>
+
+        <rollback>
+            <dropTable tableName="addresses"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

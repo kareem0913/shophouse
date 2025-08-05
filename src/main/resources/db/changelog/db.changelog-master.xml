@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="/db/changelog/changeset/00001_create_roles_table.xml" relativeToChangelogFile="false" author="kareem"/>
+    <include file="/db/changelog/changeset/00002_create_users_table.xml" relativeToChangelogFile="false" author="kareem"/>
+    <include file="/db/changelog/changeset/00003_create_user_roles_table.xml" relativeToChangelogFile="false" author="kareem"/>
+    <include file="/db/changelog/changeset/00004_create_categories_table.xml" relativeToChangelogFile="false" author="kareem"/>
+    <include file="/db/changelog/changeset/00005_create_products_table.xml" relativeToChangelogFile="false" author="kareem"/>
+    <include file="/db/changelog/changeset/00006_create_product_categories_table.xml" relativeToChangelogFile="false" author="kareem"/>
+    <include file="/db/changelog/changeset/00007_create_product_images_table.xml" relativeToChangelogFile="false" author="kareem"/>
+    <include file="/db/changelog/changeset/00008_create_addresses_table.xml" relativeToChangelogFile="false" author="kareem"/>
+    <include file="/db/changelog/changeset/00009_create_orders_table.xml" relativeToChangelogFile="false" author="kareem"/>
+    <include file="/db/changelog/changeset/00010_create_order_items_table.xml" relativeToChangelogFile="false" author="kareem"/>
+</databaseChangeLog>
