@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = com.shophouse.validation.FileValidator.class)
-@Target({ElementType.FIELD})
+@Target({ElementType.FIELD,  ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface FileConstraint {
     String message() default "Invalid file";

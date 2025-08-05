@@ -28,8 +28,8 @@ public class Product extends BaseEntity<Long> {
     private Integer quantity;
     private boolean status;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<ProductImage> images;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private Set<ProductImage> imagesUrls;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

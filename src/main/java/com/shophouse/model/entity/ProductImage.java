@@ -15,7 +15,7 @@ import lombok.Setter;
 @Table(name = "product_images")
 public class ProductImage extends BaseEntity<Long> {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
