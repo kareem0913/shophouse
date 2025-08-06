@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,6 +17,13 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "products")
+@NamedEntityGraph(
+        name = "Product.detail",
+        attributeNodes = {
+                @NamedAttributeNode("imagesUrls"),
+                @NamedAttributeNode("categories")
+        }
+)
 public class Product extends BaseEntity<Long> {
 
     private String name;
@@ -29,7 +37,7 @@ public class Product extends BaseEntity<Long> {
     private boolean status;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private Set<ProductImage> imagesUrls;
+    private List<ProductImage> imagesUrls;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(

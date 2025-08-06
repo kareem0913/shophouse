@@ -28,8 +28,32 @@ public class AdminProductController {
         return adminProductService.findAllProducts(pageable);
     }
 
+    @GetMapping("/{id}")
+    public ProductResponse httpGetProductById(@PathVariable Long id) {
+        return adminProductService.findProduct(id);
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public Page<ProductResponse> httpGetProductsByCategoryId(
+            @PathVariable Long categoryId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        return adminProductService.findProductsByCategoryId(categoryId, pageable);
+    }
+
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ProductResponse httpCreateProduct(@Valid @NotNull @ModelAttribute ProductCreate productCreate) {
         return adminProductService.createProduct(productCreate);
+    }
+
+    @PutMapping("/{id}/status")
+    public void httpChangeProductStatus(@PathVariable Long id, @RequestParam boolean status) {
+        adminProductService.changeProductStatus(id, status);
+    }
+    @DeleteMapping("/{id}")
+    public void httpDeleteProduct(@PathVariable Long id) {
+        adminProductService.deleteProduct(id);
     }
 }

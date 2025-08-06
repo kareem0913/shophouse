@@ -1,5 +1,6 @@
 package com.shophouse.model.dto.product;
 
+import com.shophouse.model.dto.category.CategoryResponse;
 import com.shophouse.model.entity.ProductImage;
 import com.shophouse.model.enums.DiscountType;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,6 @@ public class ProductResponse {
     private DiscountType discountType;
     private Integer quantity;
     private boolean status;
-    private Set<ProductImage> imagesUrls;
-    private Set<Long> categoriesIds;
+    private Set<String> imagesUrls;
+    private Set<CategoryResponse> categories;
 }

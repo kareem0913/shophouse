@@ -1,5 +1,6 @@
 package com.shophouse.service.admin.product;
 
+import com.shophouse.error.exception.ResourceNotFoundException;
 import com.shophouse.mapper.ProductMapper;
 import com.shophouse.model.dto.product.ProductCreate;
 import com.shophouse.model.dto.product.ProductResponse;
@@ -8,6 +9,7 @@ import com.shophouse.model.entity.Product;
 import com.shophouse.model.entity.ProductImage;
 import com.shophouse.repository.CategoryRepository;
 import com.shophouse.repository.ProductRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,9 +20,11 @@ import org.springframework.stereotype.Service;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.shophouse.util.Util.deleteFile;
 import static com.shophouse.util.Util.saveFile;
 
 @Service
@@ -45,12 +49,18 @@ public class AdminProductServiceImpl implements AdminProductService{
 
     @Override
     public ProductResponse findProduct(Long id) {
-        return null;
+        Product product = productRepository.findById(id).orElseThrow(() -> {
+            log.error("Product with ID {} not found", id);
+            return new ResourceNotFoundException("Product not found",
+                    "No product found with the provided ID: " + id);
+        });
+        return productMapper.toProductResponse(product);
     }
 
     @Override
     public Page<ProductResponse> findAllProducts(Pageable pageable) {
-        return null;
+        Page<Product> products = productRepository.findAll(pageable);
+        return products.map(productMapper::toProductResponse);
     }
 
     @Override
@@ -59,7 +69,7 @@ public class AdminProductServiceImpl implements AdminProductService{
         Set<Category> categories = new HashSet<>(categoryRepository.findAllById(productCreate.getCategoriesIds()));
         product.setCategories(categories);
 
-        Set<ProductImage> images = productCreate.getImages()
+        List<ProductImage> images = productCreate.getImages()
                 .stream()
                 .map(image -> {
                     String stored = saveFile(image, uploadDir, "products");
@@ -68,13 +78,13 @@ public class AdminProductServiceImpl implements AdminProductService{
                     productImage.setProduct(product);
                     return productImage;
                 })
-                .collect(Collectors.toSet());
+                .toList();
+        log.info("Built images set: size={}", images.size());
         product.setImagesUrls(images);
 
         Product savedProduct = productRepository.save(product);
         log.info("Product with ID {} created successfully", savedProduct.getId());
-
-        return null;
+        return productMapper.toProductResponse(savedProduct);
     }
 
     @Override
@@ -84,17 +94,40 @@ public class AdminProductServiceImpl implements AdminProductService{
 
     @Override
     public Page<ProductResponse> findProductsByCategoryId(Long categoryId, Pageable pageable) {
-        return null;
+        Page<Product> products = productRepository.findByCategoriesId(categoryId, pageable);
+        return products.map(productMapper::toProductResponse);
     }
 
+    @Transactional
     @Override
     public void changeProductStatus(Long id, boolean status) {
-
+        if(!productRepository.existsById(id) ) {
+            log.error("Product with ID {} not found", id);
+            throw new ResourceNotFoundException("Product not found",
+                    "No product found with the provided ID: " + id);
+        }
+        productRepository.updateStatusById(id, status);
+        log.info("Product with ID {} status changed to {}", id, status ? "active" : "inactive");
     }
 
     @Override
     public void deleteProduct(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(() -> {
+            log.error("Product with ID {} not found", id);
+            return new ResourceNotFoundException("Product not found",
+                    "No product found with the provided ID: " + id);
+        });
 
+        if (product.getImagesUrls() != null) {
+            product.getImagesUrls().forEach(image -> {
+                if (image.getImageUrl() != null) {
+                    deleteFile(uploadDir, image.getImageUrl());
+                }
+            });
+        }
+
+        productRepository.delete(product);
+        log.info("Product with ID {} deleted successfully", id);
     }
 
     @Override
