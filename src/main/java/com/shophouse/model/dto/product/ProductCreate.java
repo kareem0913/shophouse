@@ -36,6 +36,5 @@ public class ProductCreate {
     @NotEmpty(message = "At least one category id is required")
     private Set<Long> categoriesIds;
 
-    @NotEmpty(message = "At least one image is required")
     private Set<@FileConstraint MultipartFile> images;
 }

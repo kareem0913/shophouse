@@ -48,6 +48,13 @@ public class AdminProductController {
         return adminProductService.createProduct(productCreate);
     }
 
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ProductResponse httpUpdateProduct(
+            @PathVariable Long id,
+            @Valid @NotNull @ModelAttribute ProductCreate productCreate){
+        return adminProductService.updateProduct(id, productCreate);
+    }
+
     @PutMapping("/{id}/status")
     public void httpChangeProductStatus(@PathVariable Long id, @RequestParam boolean status) {
         adminProductService.changeProductStatus(id, status);

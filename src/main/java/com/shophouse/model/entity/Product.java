@@ -36,7 +36,7 @@ public class Product extends BaseEntity<Long> {
     private Integer quantity;
     private boolean status;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImage> imagesUrls;
 
     @ManyToMany(fetch = FetchType.LAZY)

@@ -1,7 +1,6 @@
 package com.shophouse.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shophouse.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
