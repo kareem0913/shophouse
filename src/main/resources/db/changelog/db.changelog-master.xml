@@ -14,4 +14,6 @@
     <include file="/db/changelog/changeset/00008_create_addresses_table.xml" relativeToChangelogFile="false" author="kareem"/>
     <include file="/db/changelog/changeset/00009_create_orders_table.xml" relativeToChangelogFile="false" author="kareem"/>
     <include file="/db/changelog/changeset/00010_create_order_items_table.xml" relativeToChangelogFile="false" author="kareem"/>
+    <include file="/db/changelog/changeset/00011_insert_data_into_roles_table.xml" relativeToChangelogFile="false" author="kareem"/>
+
 </databaseChangeLog>

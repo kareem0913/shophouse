@@ -12,4 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class AppProperties {
     private String uploadPath;
     private String appUrl;
+    private String JwtSecret;
+    private long JwtExpiration;
+    private String adminCreationKey;
 }

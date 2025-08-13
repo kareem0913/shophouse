@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/admin/categories")
+@RequestMapping("/admin/categories")
 public class AdminCategoryController {
     private final AdminCategoryService adminCategoryService;
 

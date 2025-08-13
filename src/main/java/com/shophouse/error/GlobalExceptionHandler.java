@@ -1,6 +1,8 @@
 package com.shophouse.error;
 
+import com.shophouse.error.exception.BadRequestException;
 import com.shophouse.error.exception.DuplicateResourceException;
+import com.shophouse.error.exception.FileStorageException;
 import com.shophouse.error.exception.ResourceNotFoundException;
 import com.shophouse.error.model.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -41,8 +43,14 @@ public class GlobalExceptionHandler {
         return response;
     }
 
-//    @ExceptionHandler(FileStorageException.class)
-//    public ErrorResponse handleFileStorageException(FileStorageException e) {
-//        return new ErrorResponse(e.getCode(), e.getMessage(), e.getDescription(), currentTimestamp());
-//    }
+    @ExceptionHandler(FileStorageException.class)
+    public ErrorResponse handleFileStorageException(FileStorageException e) {
+        return new ErrorResponse(e.getCode(), e.getMessage(), e.getDescription(), currentTimestamp());
+    }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ErrorResponse handleBadRequestException(BadRequestException e) {
+        return new ErrorResponse(e.getCode(), e.getMessage(), e.getDescription(), currentTimestamp());
+    }
+
 }
