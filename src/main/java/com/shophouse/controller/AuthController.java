@@ -8,10 +8,7 @@ import com.shophouse.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -22,7 +19,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public JwtAuthenticationResponse registerUser(
+    public JwtAuthenticationResponse httpRegisterUser(
             @Valid @RequestBody UserRegistrationRequest request) {
 
         log.info("User registration attempt for username: {}", request.getUsername());
@@ -30,7 +27,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public JwtAuthenticationResponse authenticateUser(
+    public JwtAuthenticationResponse httpAuthenticateUser(
             @Valid @RequestBody LoginRequest request) {
 
         log.info("Login attempt for username: {}", request.getUsername());
@@ -38,10 +35,11 @@ public class AuthController {
     }
 
     @PostMapping("/admin/create")
-    public JwtAuthenticationResponse createAdmin(
+    public JwtAuthenticationResponse httpCreateAdmin(
             @Valid @RequestBody AdminCreationRequest request) {
 
         log.info("Admin creation attempt for username: {}", request.getUsername());
         return authService.createAdmin(request);
     }
+
 }
