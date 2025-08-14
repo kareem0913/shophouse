@@ -36,6 +36,18 @@ public class Product extends BaseEntity<Long> {
     private Integer quantity;
     private boolean status;
 
+    @Transient
+    private double finalPrice;
+
+    @Transient
+    private double finalDiscount;
+
+    @PostLoad
+    public void calculateDiscountValues() {
+        this.finalDiscount = calculateDiscount();
+        this.finalPrice = this.price - this.finalDiscount;
+    }
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImage> imagesUrls;
 
@@ -46,5 +58,14 @@ public class Product extends BaseEntity<Long> {
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id")
     )
     private Set<Category> categories;
+
+    private double calculateDiscount() {
+        if (discount <= 0 || discountType == null) return 0;
+
+        return switch (discountType) {
+            case PERCENTAGE -> Math.min((price * Math.min(discount, 100)) / 100, price);
+            case AMOUNT -> Math.min(discount, price);
+        };
+    }
 
 }

@@ -26,6 +26,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @EntityGraph(value = "Product.detail", type = EntityGraph.EntityGraphType.LOAD)
     Page<Product> findByCategoriesId(Long categoryId, Pageable pageable);
 
+    @EntityGraph(value = "Product.detail", type = EntityGraph.EntityGraphType.LOAD)
+    Optional<Product> findByIdAndStatusTrue(Long id);
+
+    @EntityGraph(value = "Product.detail", type = EntityGraph.EntityGraphType.LOAD)
+    Page<Product> findAllByStatusTrue(Pageable pageable);
+
+    @EntityGraph(value = "Product.detail", type = EntityGraph.EntityGraphType.LOAD)
+    Page<Product> findAllByCategoriesIdAndStatusTrue(Long categoryId, Pageable pageable);
+
     @Modifying
     @Query("UPDATE Product p SET p.status = :status WHERE p.id = :id")
     void updateStatusById(@Param("id") Long id, @Param("status") boolean status);

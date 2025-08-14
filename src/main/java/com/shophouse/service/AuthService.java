@@ -49,7 +49,6 @@ public class AuthService {
             throw new BadRequestException("already in use", "this email address is already in use");
         }
 
-        // Get USER role - convert enum to string
         Role userRole = roleRepository.findByName("USER")
                 .orElseThrow(() -> new BadRequestException("no role", "user role not set"));
 

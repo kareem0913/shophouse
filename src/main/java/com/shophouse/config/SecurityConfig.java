@@ -76,13 +76,16 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
-                        // Public endpoints - Updated paths to match controller mappings
-                        .requestMatchers("/auth/login").permitAll()
-                        .requestMatchers("/auth/register").permitAll()
-                        .requestMatchers("/auth/admin/create").permitAll()
-                        .requestMatchers("/public/**").permitAll()
-                        .requestMatchers("/uploads/**").permitAll()
-                        .requestMatchers("/error/**").permitAll()
+                                .requestMatchers("/auth/**", "/public/**", "/uploads/**", "/error/**",
+                                        "/categories/**", "/products/**").permitAll()
+
+//                        .requestMatchers("/auth/login").permitAll()
+//                        .requestMatchers("/auth/register").permitAll()
+//                        .requestMatchers("/auth/admin/create").permitAll()
+//                        .requestMatchers("/public/**").permitAll()
+//                        .requestMatchers("/uploads/**").permitAll()
+//                        .requestMatchers("/error/**").permitAll()
+
 
                         // Admin only endpoints
                         .requestMatchers("/admin/**").hasRole("ADMIN")
