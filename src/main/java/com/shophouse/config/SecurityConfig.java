@@ -1,5 +1,7 @@
-package com.shophouse.security;
+package com.shophouse.config;
 
+import com.shophouse.security.JwtAuthenticationEntryPoint;
+import com.shophouse.security.JwtAuthenticationFilter;
 import com.shophouse.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -74,17 +76,19 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
-                        // Public endpoints
-                        .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers("/api/auth/register").permitAll()
-                        .requestMatchers("/api/auth/admin/create").permitAll()
-                        .requestMatchers("/api/public/**").permitAll()
+                        // Public endpoints - Updated paths to match controller mappings
+                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/auth/register").permitAll()
+                        .requestMatchers("/auth/admin/create").permitAll()
+                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/uploads/**").permitAll()
+                        .requestMatchers("/error/**").permitAll()
 
                         // Admin only endpoints
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
 
                         // User endpoints (both USER and ADMIN can access)
-                        .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
 
                         // All other requests need authentication
                         .anyRequest().authenticated()

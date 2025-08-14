@@ -49,20 +49,21 @@ public class AuthService {
             throw new BadRequestException("already in use", "this email address is already in use");
         }
 
-        // Get USER role
-        Role userRole = roleRepository.findByName(RoleName.USER)
+        // Get USER role - convert enum to string
+        Role userRole = roleRepository.findByName("USER")
                 .orElseThrow(() -> new BadRequestException("no role", "user role not set"));
 
         // Create new user
-       User user = User.builder()
+        User user = User.builder()
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .phone(request.getPhone())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .status(true)
                 .roles(Set.of(userRole))
                 .build();
 
-        com.shophouse.model.entity.User savedUser = userRepository.save(user);
+        User savedUser = userRepository.save(user);
         log.info("New user registered: {}", savedUser.getUsername());
 
         // Generate JWT token
@@ -91,8 +92,8 @@ public class AuthService {
             throw new BadRequestException("already in use!", "this email address is already in use");
         }
 
-        // Get ADMIN role
-        Role adminRole = roleRepository.findByName(RoleName.ADMIN)
+        // Get ADMIN role - convert enum to string
+        Role adminRole = roleRepository.findByName("ADMIN")
                 .orElseThrow(() -> new BadRequestException("no role.", "admin role not set"));
 
         // Create new admin user
@@ -101,6 +102,7 @@ public class AuthService {
                 .email(request.getEmail())
                 .phone(request.getPhone())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .status(true)
                 .roles(Set.of(adminRole))
                 .build();
 
