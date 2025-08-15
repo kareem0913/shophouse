@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/profile")
 @RequiredArgsConstructor
 public class ProfileController {
 
     private final UserService userService;
 
-    @GetMapping("/profile")
+    @GetMapping
     public UserProfileResponse httpGetCurrentUserProfile(@AuthenticationPrincipal UserPrincipal currentUser) {
         return userService.getCurrentUserProfile(currentUser);
     }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="1754011677597-1" author="kareem">
+        <createTable tableName="wishlists">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="user_id" type="BIGINT" />
+            <column name="product_id" type="BIGINT" />
+            <column name="created_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="wishlists"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_wishlists_user_id"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id" />
+
+        <addForeignKeyConstraint baseTableName="wishlists"
+                                 baseColumnNames="product_id"
+                                 constraintName="fk_wishlists_product_id"
+                                 referencedTableName="products"
+                                 referencedColumnNames="id" />
+
+        <rollback>
+            <dropTable tableName="wishlists"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

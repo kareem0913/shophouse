@@ -1,5 +1,6 @@
 package com.shophouse.model.dto.auth;
 
+import com.shophouse.validation.PhoneNumber;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -17,7 +18,7 @@ public class AdminCreationRequest {
     @Email(message = "Please provide a valid email address")
     private String email;
 
-    @Pattern(regexp = "^[+]?[0-9]{10,15}$", message = "Please provide a valid phone number")
+    @PhoneNumber
     private String phone;
 
     @NotBlank(message = "Password is required")

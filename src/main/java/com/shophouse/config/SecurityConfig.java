@@ -83,7 +83,6 @@ public class SecurityConfig {
                                         "/swagger-ui.html", "/swagger-ui/**",
                                         "/v3/api-docs", "/v3/api-docs/**"
                                 ).permitAll()
-
 //                        .requestMatchers("/auth/login").permitAll()
 //                        .requestMatchers("/auth/register").permitAll()
 //                        .requestMatchers("/auth/admin/create").permitAll()
@@ -95,8 +94,11 @@ public class SecurityConfig {
                         // Admin only endpoints
                         .requestMatchers("/admin/**").hasRole("ADMIN")
 
-                        // User endpoints (both USER and ADMIN can access)
-                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
+                        // user endpoints
+                        .requestMatchers("/user/**").hasRole("USER")
+
+                        // profile endpoints
+                        .requestMatchers("/profile/**").hasAnyRole("USER", "ADMIN")
 
                         // All other requests need authentication
                         .anyRequest().authenticated()
