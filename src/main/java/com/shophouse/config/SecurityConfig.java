@@ -76,8 +76,13 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
-                                .requestMatchers("/auth/**", "/public/**", "/uploads/**", "/error/**",
-                                        "/categories/**", "/products/**").permitAll()
+                                .requestMatchers(
+                                        "/auth/**", "/public/**",
+                                        "/uploads/**", "/error/**",
+                                        "/categories/**", "/products/**",
+                                        "/swagger-ui.html", "/swagger-ui/**",
+                                        "/v3/api-docs", "/v3/api-docs/**"
+                                ).permitAll()
 
 //                        .requestMatchers("/auth/login").permitAll()
 //                        .requestMatchers("/auth/register").permitAll()
