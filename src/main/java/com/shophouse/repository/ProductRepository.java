@@ -10,7 +10,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
@@ -38,5 +40,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Modifying
     @Query("UPDATE Product p SET p.status = :status WHERE p.id = :id")
     void updateStatusById(@Param("id") Long id, @Param("status") boolean status);
+
+    @Query("SELECT p FROM Product p WHERE p.id IN :productIds")
+    @EntityGraph(value = "Product.detail", type = EntityGraph.EntityGraphType.LOAD)
+    List<Product> findAllByIdIn(@Param("productIds") Set<Long> productIds);
 
 }
