@@ -1,6 +1,6 @@
 package com.shophouse.model.dto.order;
 
-import com.shophouse.model.enums.OrderStatsu;
+import com.shophouse.model.enums.OrderStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -16,7 +16,7 @@ public class OrderCreate {
     @NotNull
     private Double totalDiscount;
 
-    private OrderStatsu orderStatus = OrderStatsu.PENDING;
+    private OrderStatus orderStatus = OrderStatus.PENDING;
 
     @NotNull(message = "Order items cannot be null")
     @NotEmpty(message = "Order must have at least one item")

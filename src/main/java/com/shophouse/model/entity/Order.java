@@ -1,7 +1,7 @@
 package com.shophouse.model.entity;
 
 import com.shophouse.base.BaseEntity;
-import com.shophouse.model.enums.OrderStatsu;
+import com.shophouse.model.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,7 +21,7 @@ public class Order extends BaseEntity<Long> {
     private Double totalDiscount;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatsu orderStatus;
+    private OrderStatus orderStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

@@ -55,16 +55,20 @@ public class CustomerOrderServiceImpl implements CustoemrOrderService{
         }
 
         orderRepository.save(order);
+        log.info("Order placed successfully");
         return orderMapper.toOrderResponse(order);
     }
 
     @Override
     public Page<OrderResponse> getUserOrders(Long userId, Pageable pageable) {
-        return null;
+        Page<Order> orders = orderRepository.findByUserId(userId, pageable);
+        return orders.map(orderMapper::toOrderResponse);
     }
 
     @Override
     public OrderResponse getOrderById(Long orderId, Long userId) {
-        return null;
+        Order order = orderRepository.findByIdAndUserId(orderId, userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found", "Order not found with id: " + orderId));
+        return orderMapper.toOrderResponse(order);
     }
 }

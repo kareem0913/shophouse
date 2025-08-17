@@ -1,6 +1,6 @@
 package com.shophouse.model.enums;
 
-public enum OrderStatsu {
+public enum OrderStatus {
     PENDING,
     SHIPPED,
     DELIVERED,

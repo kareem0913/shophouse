@@ -1,6 +1,6 @@
 package com.shophouse.model.dto.order;
 
-import com.shophouse.model.enums.OrderStatsu;
+import com.shophouse.model.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ public class OrderResponse {
     private Long id;
     private Double totalAmount;
     private Double totalDiscount;
-    private OrderStatsu orderStatus;
+    private OrderStatus orderStatus;
     private List<OrderItemResponse> orderItems;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
