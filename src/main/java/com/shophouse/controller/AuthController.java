@@ -61,7 +61,7 @@ public class AuthController {
 
     @PostMapping("/admin/create")
     @Operation(summary = "Create admin user",
-            description = "Create a new admin user. Requires admin creation key in X-Admin-Key header.")
+            description = "Create a new admin user. Requires admin creation key, you can use this key: SUPER_SECRET_ADMIN_KEY")
     @SecurityRequirement(name = "admin-creation-key")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Admin created successfully",
