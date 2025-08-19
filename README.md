@@ -19,7 +19,7 @@
 
 ## Features
 
-* User authentication & authorization (Spring Security + JWT or session based).
+* User authentication & authorization (Spring Security With JWT).
 * Products, categories, images, and uploads handling.
 * Database migrations with Liquibase.
 * RESTful API with Swagger UI for interactive docs.
