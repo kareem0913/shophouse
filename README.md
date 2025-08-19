@@ -39,7 +39,7 @@ wget https://raw.githubusercontent.com/kareem0913/shophouse/main/docker-compose.
 2. Start the services with Docker Compose:
 
 ```bash
-docker compose up -d
+docker compose up
 ```
 
 3. Open the Swagger UI to explore the API:
