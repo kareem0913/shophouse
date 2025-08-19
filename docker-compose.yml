@@ -19,7 +19,7 @@ services:
       retries: 10
 
   app:
-    build: .
+    image: kareemzaher/shophouse-app:latest
     container_name: shophouse-app
     depends_on:
       mysql:
